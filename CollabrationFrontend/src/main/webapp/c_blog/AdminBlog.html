@@ -1,0 +1,28 @@
+<div class="container" ng-controller="BlogController">
+
+
+<h2 align="center">Manage Blog</h2>
+
+<table class="table table-condensed">
+<thread>
+<tr>
+<th>Blog Name</th>
+<th>Created by</th>
+<th>Created Date</th>
+<th></th>
+</tr>
+</thread>
+<tbody>
+<tr nd-repeat="blog in blogData">
+<td>{{blog.blogName}}</td>
+<td>{{blog.userName}}</td>
+<td>{{blog.createDate}}</td>
+<td ng-hide="blog.status==='A'">
+<input type="button" vlue="Approve" class="btn btn-success" ng-click="approve(blog.blogId)"/>
+</td>
+<td ng-hide="blog.status==='NA'">
+<input type="button" vlue="Reject" class="btn btn-success" ng-click="reject(blog.blogId)"/>
+</td>
+</tbody>
+</table>
+</div>

@@ -1,0 +1,24 @@
+<br/><br/>
+
+<div class="container" ng-controller="userController">
+<table class=table table-bordered">
+<tr bgcolor="red">
+<td colspan="2" class="text-center">Sign In Here</td>
+</tr>
+<tr>
+<td>UserName</td>
+<td><input type="text" name="uname" ng-model="user.username"/></td>
+</tr>
+<tr>
+<td>Password</td>
+<td><input type="password" name="password" ng-model="user.password"/></td>
+</tr>
+<tr bgcolor="red">
+<td colspan"2">
+<center>
+<input type="button" class="btn btn-success" ngclick="loginCheck()" value="Sign In"/>
+<a href="#/register">SignUp</a>
+</center>
+</td>
+</table>
+</div>
