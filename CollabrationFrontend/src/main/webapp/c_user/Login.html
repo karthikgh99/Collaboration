@@ -1,24 +1,42 @@
-<br/><br/>
 
-<div class="container" ng-controller="userController">
-<table class=table table-bordered">
-<tr bgcolor="red">
-<td colspan="2" class="text-center">Sign In Here</td>
-</tr>
-<tr>
-<td>UserName</td>
-<td><input type="text" name="uname" ng-model="user.username"/></td>
-</tr>
-<tr>
-<td>Password</td>
-<td><input type="password" name="password" ng-model="user.password"/></td>
-</tr>
-<tr bgcolor="red">
-<td colspan"2">
-<center>
-<input type="button" class="btn btn-success" ngclick="loginCheck()" value="Sign In"/>
-<a href="#/register">SignUp</a>
-</center>
-</td>
-</table>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+  <div class="login-wrap">
+	<div class="login-html" ng-controller="userController">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+		<input id="tab-2" type="radio" name="tab" class="for-pwd"><label for="tab-2" class="tab">Forgot Password</label>
+		<div class="login-form" >
+			<div class="sign-in-htm">
+				<div class="group">
+					<label for="user" class="label">Username or Email</label>
+					<input id="user" type="text" class="input" ng-model="user.username">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<input id="pass" type="password" class="input" ng-model="user.password" data-type="password">
+				</div>
+				<div class="group">
+					<input type="submit" class="button" ng-click="loginCheck(user)" value="Sign In">
+				</div>
+				<div class="hr"></div>
+			</div>
+			<div class="for-pwd-htm">
+				<div class="group">
+					<label for="user" class="label">Username or Email</label>
+					<input id="user" type="text" class="input">
+				</div>
+				<div class="group">
+					<input type="submit" class="button" value="Reset Password">
+				</div>
+				<div class="hr"></div>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+

@@ -1,38 +1,63 @@
-<div class="container" ng-controller="BlogController">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-<h2 align"center">Blog Info</h2>
+<div class="container" >
+
+<h2 align"center">Show Blogs</h2>
 
 <div class="panel-group" id="accordion">
-<div class="panel panel-defualt" >
+<div class="panel panel-defualt">
 <div class="panel-heading">
-<h4 class="panel-title">
-<a data-toogle="collapse" data-parent="#accordion" href="#{{blog.blogId}}">Collapsible Group:</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="like.png" width="20" height="20" ng-click="incrementLikes(blog.blogId)"/>{{blog.likes}}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="dislike.png" width="20" height="20" ng-click="incrementDisLikes(blog.blogId)"/>{{blog.dislikes}}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img ng-show="blog.username==currentUser.username" src="delete.png" width="20" height="20" ng-click="deleteBlog(blog.blogId)"/>{{blog.deleteBlog}}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="comment.png" width="20" height="20" ng-click="showComments(blog.blogId)"/>{{blog.blogComments}}
-</h4>
+<h1>Comment on this Blog</h1>
 </div>
-<div id="{{blog.blogId}}" class="panel-collapse collapse in">
+<div  class="panel-collapse collapse in">
 <div class="panel-body">
-{{blog.blogContent}}
+<b><span style="color:red">Blogname:</span><span style="color:blue">{{blog.blogname}}</span></b>
+<br/>
+<br/>
+<b><span style="color:red">BlogContent:</span><span style="color:blue">{{blog.blogcontent}}</span></b>
 </div>
-</div>
-</div>
-</div>
-<bg color="cyan">
-<div><textarea rows="3" cols="40" name="commentData" ng-model="blogComment.commentData"></textarea>
-<img src="InsertIcon.png" width="30" height="30" ng-click="insertComment(blog.blogId)"/>
 </div>
 
-<div ng-repeat="comment in blogCommentData">
-<div>
-<img src="" width="20" height="20">
-{{comment.commentData}}
+
 </div>
-<div>{{comment.createDate}}</div>
 </div>
+</div>
+
+
+<div class="container" >
+<bg color="cyan">
+
+<textarea rows="3" cols="40" name="commentdata" ng-model="blogComment.commentdata" placeholder="Add Comment"></textarea>
+<img src="resources/images/InsertIcon.png" width="30" height="30" ng-click="insertComment(blog)"/>
+</div>
+
+
+<div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="page-header">
+                    <h1><small class="pull-right"></small> Comments </h1>
+                  </div> 
+                   <div class="comments-list" ng-repeat="comment in blogCommentdata">
+                       <div class="media">
+                           <p class="pull-right"><small>Commented On:{{comment.commentedon}}</small></p>
+                            <a class="media-left" href="#">
+                              <img src="http://lorempixel.com/40/40/people/1/">
+                            </a>
+                            <div class="media-body">
+                                
+                              <h4 class="media-heading user_name">Commented By:{{comment.user.username}}</h4>
+                             {{comment.commentdata}}
+                              
+                              
+                            </div>
+   <span style="color:white"> _________________________________________________________________________________________________________</span>
+                          </div>
+                       </div>
+                   </div>
+                   </div>
+                   </div>
+                   

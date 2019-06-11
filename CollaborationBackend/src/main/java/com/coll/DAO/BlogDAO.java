@@ -12,7 +12,7 @@ public interface BlogDAO {
 	public boolean deleteBlog(Blog blog);
 	public boolean updateBlog(Blog blog);
     public Blog getBlog(int blogid);
-    public List<Blog> listBlogs();
+    public List<Blog> listBlogs(String status);
     
     public boolean approveBlog(Blog blog);
     public boolean rejectBlog(Blog blog);

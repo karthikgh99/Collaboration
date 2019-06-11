@@ -1,0 +1,22 @@
+<br />
+<div class="container" ng-container="jobController">
+
+<div ng-repeat="job in jobs">
+<div class="row">
+<div class="col-xs-12" style="background-color:orange">
+<strong>Job ID:</strong><a href="# ng-click="detailJob(job.jobId)">{{job.jobid}}</a>
+<div class="row">
+<div class= col-xs-12 cols-sm-6 col-md-6"><strong>Designation:{{job.designation}}</strong></div>
+</div>
+<div class="row">
+<div class= col-xs-12 cols-sm-6 col-md-6"><strong>Designation:{{job.jobDesc}}</strong></div>
+</div>
+<div class="row">
+<div class= col-xs-12 cols-sm-6 col-md-6"><strong>CTC:{{job.CTC}}</strong></div>
+<div class= col-xs-12 cols-sm-6 col-md-6"><strong>Location:{{job.jobLocation}}</strong></div>
+<div class="row">
+</div>
+</div>
+</div>
+</div>
+</div>

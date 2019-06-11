@@ -19,6 +19,7 @@ import com.coll.model.Forum;
 import com.coll.model.ForumComment;
 import com.coll.model.Friend;
 import com.coll.model.Job;
+import com.coll.model.ProfilePicture;
 import com.coll.model.User;
 
 @Configuration
@@ -41,24 +42,26 @@ public class DbConfig {
 		Properties properties = new Properties();
 		properties.put("hibernate.show_sql", "true");
 		properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
-		properties.put("hibernate.hbm2ddl.auto", "create");
+		properties.put("hibernate.hbm2ddl.auto", "update");
 		return properties;
 	}
 	
 	
 	@Bean (name = "sessionFactory")
 	public SessionFactory getSessionFactory(DataSource dataSource) {
-		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
-	    sessionBuilder.addProperties(getHibernateProperties());
-	    sessionBuilder.addAnnotatedClass(Blog.class);
-	    sessionBuilder.addAnnotatedClass(BlogComment.class);
-	    sessionBuilder.addAnnotatedClass(Forum.class);
-	    sessionBuilder.addAnnotatedClass(ForumComment.class);
-	    sessionBuilder.addAnnotatedClass(Friend.class);
-	   // sessionBuilder.addAnnotatedClass(Job.class);
-	    sessionBuilder.addAnnotatedClass(User.class);
+		LocalSessionFactoryBuilder sessionFactoryBuilder = new LocalSessionFactoryBuilder(dataSource);
+	    sessionFactoryBuilder.addProperties(getHibernateProperties());
+	    sessionFactoryBuilder.addAnnotatedClass(Blog.class);
+	    sessionFactoryBuilder.addAnnotatedClass(BlogComment.class);
+	    sessionFactoryBuilder.addAnnotatedClass(Forum.class);
+	    sessionFactoryBuilder.addAnnotatedClass(ForumComment.class);
+	    sessionFactoryBuilder.addAnnotatedClass(Friend.class);
+	   // sessionFactoryBuilder.addAnnotatedClass(Job.class);
+	    sessionFactoryBuilder.addAnnotatedClass(User.class);
+	    sessionFactoryBuilder.addAnnotatedClass(ProfilePicture.class);
+	    
 	    System.out.println("Database Connected");
-	    return sessionBuilder.buildSessionFactory();
+	    return sessionFactoryBuilder.buildSessionFactory();
 	    
 	}
 	

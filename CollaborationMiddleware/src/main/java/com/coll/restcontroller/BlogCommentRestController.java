@@ -1,6 +1,9 @@
 package com.coll.restcontroller;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coll.DAO.BlogCommentDAO;
 import com.coll.model.BlogComment;
+import com.coll.model.User;
 
 @RestController
 public class BlogCommentRestController 
@@ -37,11 +41,15 @@ public ResponseEntity<List<BlogComment>> listBlogComment(@PathVariable("blogId")
 }
 
 @PostMapping(value="/addBlogComment")
-public ResponseEntity<String> addBlogComment(@RequestBody BlogComment blogComment )
+public ResponseEntity<?> addBlogComment(@RequestBody BlogComment blogComment ,HttpSession session)
 {
+	User u=(User) session.getAttribute("loggedinuser");
+	blogComment.setUser(u);
+	blogComment.setCommentedon(new Date());
+	
 	if (blogCommentDAO.addBlogComment(blogComment))
 	{
-		return new ResponseEntity<String>("BlogComment Added",HttpStatus.OK);
+		return new ResponseEntity<BlogComment>(blogComment,HttpStatus.OK);
 	}
 	else
 	{

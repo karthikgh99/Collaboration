@@ -55,7 +55,7 @@ import com.coll.model.BlogComment;
 		public List<BlogComment> listBlogComment(int blogid) {
 			try
 			{
-				return sessionFactory.getCurrentSession().createQuery("from BlogComment where blogid="+blogid).list();
+				return sessionFactory.getCurrentSession().createQuery("from BlogComment where blog.blogid="+blogid).list();
 			}
 			catch (Exception e) {
 			return null;

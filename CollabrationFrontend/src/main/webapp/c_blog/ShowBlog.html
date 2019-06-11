@@ -1,0 +1,34 @@
+<div class="container" ng-controller="BlogController">
+
+<h2 align"center">Show Blogs</h2>
+
+<div class="panel-group" id="accordion">
+<div class="panel panel-defualt" ng-repeat="blog in blogData">
+<div class="panel-heading">
+<h4 class="panel-title">
+<button type="button" class="btn btn-success" data-toggle="collapse" data-target="#{{blog.blogid}}" href="#{{blog.blogid}}">{{blog.blogname}}</button>
+
+
+<div id="{{blog.blogid}}" class="collapse">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+<b><span style="color:red">BlogContent:</span> </b><span style="color:black">{{blog.blogcontent}}</span>
+<br/>
+
+</div>
+
+<span style="color:red"><img src="resources/images/like.png" width="20" height="20" ng-click="incrementLikes(blog.blogid)" />{{blog.likes}}</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="color:red"><img src="resources/images/dislike.png" width="20" height="20" ng-click="incrementDisLikes(blog.blogid)" />{{blog.dislike}}</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img ng-show="blog.username==currentUser.username" src="resources/images/delete.png" width="20" height="20" ng-click="deleteBlog(blog.blogid)" />{{blog.deleteBlog}}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="resources/images/comment.png" width="20" height="20" ng-click="showComments(blog.blogid)"/>{{blog.blogComments}}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+</h4>
+</div>
+<br/>
+</div>
+</div>
+</div>
+

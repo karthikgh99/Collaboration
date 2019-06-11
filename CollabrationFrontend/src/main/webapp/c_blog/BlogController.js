@@ -1,17 +1,18 @@
-myApp.controller("BlogController",function($scope,$location,$http,$rootscope)
+myApp.controller("BlogController",function($scope,$location,$http,$rootScope)
 {			
-$scope.blog={"blogId":"0","blogName":"","blogContent":"","username":"","createdate":"","status":"","likes":"","dislike":""};
+$scope.blog={"blogid":"0","blogname":"","blogcontent":"","username":"","createdate":"","status":"","likes":"","dislike":""};
 	
-	$scope.blogData;
+	$scope.blogData=[];
 	
-	$scope.addBlog=function()
+	$scope.addBlog=function(blog)
 	{
 		console.log('Adding Blog Information');
 		
-		$http.post('http://localhost:8088/CollaborationMiddleware/addBlog',$scope.blog)
+		$http.post('http://localhost:8081/CollaborationMiddleware/addBlog',blog)
 		.then(function(response)
 				{
 			alert("Adding a Blog Info");
+			loadBlogs();
 			$location.path("/addBlog");
 			});
 	}
@@ -20,9 +21,11 @@ $scope.blog={"blogId":"0","blogName":"","blogContent":"","username":"","createda
 	{
 		console.log('I am in implementing Likes Blog');
 		
-		$http.get('http://localhost:8088/CollaborationMiddleware/incrementLikes/'+blogId)
+		$http.get('http://localhost:8081/CollaborationMiddleware/incrementLikes/'+blogId)
 		.then(function(response){
 			alert("Blog likes incremented")
+			loadBlogs();
+			$location.path("/showBlog");
 	});
 	}
 	
@@ -30,9 +33,11 @@ $scope.blog={"blogId":"0","blogName":"","blogContent":"","username":"","createda
 	{
 		console.log('I am in implementing DisLikes Blog');
 		
-		$http.get('http://localhost:8088/CollaborationMiddleware/incrementDisLikes/'+blogId)
+		$http.get('http://localhost:8081/CollaborationMiddleware/incrementDisLikes/'+blogId)
 		.then(function(response){
 			alert("Blog Dislikes incremented")
+			loadBlogs();
+			$location.path("/showBlog");
 	});
 	}
 	
@@ -40,7 +45,7 @@ $scope.blog={"blogId":"0","blogName":"","blogContent":"","username":"","createda
 	{
 		console.log('I am in Deleting Blog');
 		
-		$http.get('http://localhost:8088/CollaborationMiddleware/deleteBlog/'+blogId)
+		$http.get('http://localhost:8081/CollaborationMiddleware/deleteBlog/'+blogId)
 		.then(function(response){
 			alert("Blog is deleted")
 	});
@@ -50,9 +55,11 @@ $scope.blog={"blogId":"0","blogName":"","blogContent":"","username":"","createda
 	{
 		console.log('I am in Approving Blog');
 		
-		$http.get('http://localhost:8088/CollaborationMiddleware/')
+		$http.get('http://localhost:8081/CollaborationMiddleware/approveBlog/'+blogId)
 		.then(function(response){
 			alert("Blog is approved with BlogID"+blogId);
+			loadBlogs();
+			$location.path("/manageBlog");
 	});
 	}
 	
@@ -60,15 +67,19 @@ $scope.blog={"blogId":"0","blogName":"","blogContent":"","username":"","createda
 	{
 		console.log('I am in Rejecting Blog');
 		
-		$http.get('http://localhost:8088/CollaborationMiddleware/')
-		.then(function(response){
+		$http.get('http://localhost:8081/CollaborationMiddleware/rejectBlog/'+blogId)
+		.then(function(response)
+				{
+			alert("Blog is rejected with BlogID"+blogId);
+			loadBlogs();
+			$location.path("/manageBlog");
 	});
 	}
 	
 	function loadBlogs()
 	{
 		console.log('Blog list');
-		$http.get('http://localhost:8088/CollaborationMiddleware/showAllBlogs')
+		$http.get('http://localhost:8081/CollaborationMiddleware/showAllBlogs')
 		.then(function(response)
 		{
 			console.log(response.data);
@@ -79,9 +90,10 @@ $scope.blog={"blogId":"0","blogName":"","blogContent":"","username":"","createda
 	$scope.showComments=function(blogId)
 	{
 		console.log('Showing Blog Comments');
-		$rootScope.blogId=BlogId;
+		$rootScope.blogId=blogId;
 		$location.path("/showBlogComments");
 	}
+	
 	loadBlogs();
 });
 				

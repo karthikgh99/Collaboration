@@ -37,7 +37,7 @@ public class Blog {
 	private int dislike;
 	
 	@ManyToOne
-	private User username;
+	private User user;
 	
 	
 	public int getBlogid() {
@@ -96,6 +96,16 @@ public class Blog {
 	public void setDislike(int dislike) {
 		this.dislike = dislike;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	
 
 	
 }

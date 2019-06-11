@@ -1,5 +1,6 @@
 package com.coll.model;
 
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,87 +16,68 @@ public class BlogComment {
 	@Column
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int blogid;
-	
-	@Column(nullable=false)
-	private String blogname;
-	
-	@Column
-	private String blogcontent;
-	
-	
-	@Column(nullable=false)
-	private Date createdate;
-
-	@Column(nullable=false)
-	private String status;
-
-	@Column
-	private int likes;
-	
-	@Column
-	private int dislike;
+	private int blogcommentid;
+	private String commentdata;
+	private Date commentedon;
 	
 	@ManyToOne
-	private User emailid;
+	Blog blog;
 	
 	
-	public int getBlogid() {
-		return blogid;
-	}
-
-	public void setBlogid(int blogid) {
-		this.blogid = blogid;
-	}
-
-	public String getBlogname() {
-		return blogname;
-	}
-
-	public void setBlogname(String blogname) {
-		this.blogname = blogname;
-	}
-
-	public String getBlogcontent() {
-		return blogcontent;
-	}
-
-	public void setBlogcontent(String blogcontent) {
-		this.blogcontent = blogcontent;
+	@ManyToOne
+	private User user;
+	
+	
+	public String getCommentdata() {
+		return commentdata;
 	}
 
 
-	public Date getCreatedate() {
-		return createdate;
+	public void setCommentdata(String commentdata) {
+		this.commentdata = commentdata;
 	}
 
-	public void setCreatedate(Date createdate) {
-		this.createdate = createdate;
+
+	public int getBlogcommentid() {
+		return blogcommentid;
 	}
 
-	public String getStatus() {
-		return status;
+
+	public void setBlogcommentid(int blogcommentid) {
+		this.blogcommentid = blogcommentid;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+
+	public Date getCommentedon() {
+		return commentedon;
 	}
 
-	public int getLikes() {
-		return likes;
+
+	public void setCommentedon(Date commentedon) {
+		this.commentedon = commentedon;
 	}
 
-	public void setLikes(int likes) {
-		this.likes = likes;
+
+	public Blog getBlog() {
+		return blog;
 	}
 
-	public int getDislike() {
-		return dislike;
+
+	public void setBlog(Blog blog) {
+		this.blog = blog;
 	}
 
-	public void setDislike(int dislike) {
-		this.dislike = dislike;
+
+	public User getUser() {
+		return user;
 	}
 
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	
 	
 }

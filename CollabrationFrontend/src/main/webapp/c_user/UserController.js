@@ -1,6 +1,6 @@
-myApp.controller("userController",function($scope,$location,$http,$rootScope)
+myApp.controller("userController",function($scope,$location,$http,$rootScope,$cookieStore)
 {
-	//$scope.user={"username":"","password":"","name":"","emailid":"","role":"","status":"","isonline":""};
+	$scope.user={"username":"","password":"","name":"","emailid":"","role":"","status":"","isonline":""};
 	
 	
 	
@@ -11,14 +11,14 @@ myApp.controller("userController",function($scope,$location,$http,$rootScope)
 			console.log($scope.user.password);
 			
 
-			$http.post("http://localhost:8088/CollaborationMiddleware/checkUser",$scope.user)
+			$http.post("http://localhost:8081/CollaborationMiddleware/checkUser",$scope.user)
 			.then(function(response)
 					{
 				console.log('Loged In');
-				$scope.user=resonse.data;
+				$scope.user=response.data;
 				$rootScope.currentUser=response.data;
 				console.log($rootScope.currentUser);
-				$cookieStore.put('userdatails',response.data);
+				$cookieStore.put('userdetails',response.data);
 				console.log(response.data);
 				$location.path("/userHome");
 					
@@ -27,10 +27,10 @@ myApp.controller("userController",function($scope,$location,$http,$rootScope)
 	
 	$scope.logout=function()
 	{
-		console.log('I am in logout Function');
+		console.log("I am in logout Function");
 		delete $rootScope.currentUser;
-		$coookiestore.remove('user');
-		$location.path("/logout");
+		$cookieStore.remove('userdetails');
+		$location.path("/login");
 	}
 	
 	
@@ -46,10 +46,12 @@ myApp.controller("userController",function($scope,$location,$http,$rootScope)
 //		console.log($scope.user.emailid);
 //		
 		console.log(user);
-		$http.post("http://localhost:8088/CollaborationMiddleware/registerUser",user)
+		$http.post("http://localhost:8081/CollaborationMiddleware/registerUser",user)
 		.then(function(response)
 				{
-			console.log('Registered');
+			$scope.user=response.data;
+			
+			console.log('Registered '+$scope.user);
 			$location.path("/login");
 				});
 	}

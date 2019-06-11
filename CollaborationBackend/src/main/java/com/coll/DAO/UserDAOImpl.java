@@ -40,9 +40,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User checkUser(String emailid, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public User checkUser(String username, String password) {
+		return (User)sessionFactory.getCurrentSession().createQuery("from User where username='"+username+"' and password='"+password+"' ").uniqueResult();
+		
 	}
 	
 	

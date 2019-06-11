@@ -1,14 +1,7 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <title>Collaboration</title>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-cookies.js"></script>
- 
- <script src="RouteConfig.js"></script>
-<script src="c_user/UserController.js"></script> 
-<script src="c_blog/BlogController.js"></script>
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,45 +9,78 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   
-  <link rel="stylesheet" href="LoginPage.css"/>
+  <link rel="stylesheet" href="resources/css/Login.css"/>
       
+<script src="https//cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.js"></script>
+<script src="https//cdnjs.cloudflare.com/ajax/libs/lodash/4.16.3/lodash.js"></script>
+<script src="https//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+
+
+
 </head>
 <body ng-app="myApp1">
 <br/>
 <nav class="navbar navbar-inverse">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
+      <a class="navbar-brand" href="#">Collaboration</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="userHome">Home</a></li>
+      <li class="active"><a href="#/userHome">Home</a></li>
       <li><a href="#/login" ng-show="currentUser==undefined">Login</a></li>
        <li><a href="#/register" ng-show="currentUser==undefined">Register</a></li>
-       <li class"dropdown" ng-hide="currentUser==undefined">
-       <a class="dropdown-toogle data-toggle="dropdown" href="#">Blog<span class"caret"></span></a>
+       <li><a href="#/profilePicture" ng-hide="currentUser==undefined">Profile Picture</a></li>
+       <li><a href="#/friend" ng-hide="currentUser==undefined">Friend</a></li>
+       <li><a href="#/chat" ng-hide="currentUser==undefined">Chat</a></li>
+         
+         
+           
+       <li class="dropdown" >
+       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Blog<span class="caret"></span></a>
        <ul class="dropdown-menu">
-       <li><a  href="#/addBlog">Add Blog</a></li>
-       <li><a class="nav-link" href="#/manageBlog">Manage Blog</a></li>
-       <li><a class="nav-link" href="#/showBlog">Show Blog</a></li>
+       <li ng-hide="currentUser==undefined"><a  href="#/addBlog">Add Blog</a></li>
+       <li ng-show="currentUser.role=='ROLE_ADMIN'"><a class="nav-link" href="#/manageBlog">Manage Blog</a></li>
+       <li><a ng-show="currentUser.role=='ROLE_USER'"  href="#/showBlog">Show Blog</a></li>
+        </ul>
+        </li>
+        
+     <li class="dropdown" ng-hide="currentUser==undefined">
+       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Job<span class="caret"></span></a>
+       <ul class="dropdown-menu">
+       <li><a  href="#/addJob">Publish Job</a></li>
+       <li><a class="nav-link" href="#/manageJob">Manage Job</a></li>
+       <li><a class="nav-link" href="#/showJob">Show Job</a></li>
         </ul>
         </li>
         </ul>
-        
-     
     
    
     
-   <div class="nav navbar-nav navbar-right" mg-controller="userController" ng-hide="currentUser==undefined">
-    <font color="white" face="calibri" size="2"> Welcome{{currentUser.username}}</font>
-    <input class="btn btn-success" ng-click="loginCheck()" value="Logout"/>  
+   <div class="nav navbar-nav navbar-right" ng-controller="userController" ng-hide="currentUser==undefined">
+    <font color="white" face="calibri" size="2"> 
+    <img src="http://locahost:8081/CollaborationMiddleware/getImage/{{currentUser.username}}"/>
+    {{currentUser.username}}</font>
+    <input class="btn btn-success" ng-click="logout()" value="Logout"/>  
     
-  </div>
+  
+  </div></div>
+  
 </nav>
   
-  <div ng-view></div>
+   <div ng-view></div>
   
-
-
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-cookies.js"></script>
+ 
+ <script src="RouteConfig.js"></script>
+<script src="c_user/UserController.js"></script> 
+<script src="c_blog/BlogController.js"></script>
+<script src="c_blog/BlogCommentController.js"></script>
+<script src="c_Friend/FriendController.js"></script>
+<!-- <script src="c_chat/ChatController.js"></script>
+<script src="c_chat/ChatService.js"></script> 
+<script src="c_job/JobController.js"></script>-->
 
 </body>
 </html>

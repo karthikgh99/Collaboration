@@ -1,21 +1,21 @@
 <div class="container" ng-controller="BlogController">
 <table class="table table-bordered">
 <tr bgcolor="red">
-<td colspan="2" class="text-center">Sign in here</td>
+<td colspan="2" class="text-center">Add Blog</td>
 </tr>
 <tr>
 <td>Blog Name</td>
-<td><input type="text" name="umame" ng-model="blog.blogName"/></td>
+<td><span style="color:black"><input type="text" name="umame" ng-model="blog.blogname" placeholder="Blog Name"/></td></span>
 </tr>
 <tr>
 <td>Blog Content</td>
-<td><textarea clos="20" rows="7" name=blogcontent ng-model="blog.blogContent"></textarea></td>
+<td><span style="color:black"><textarea colss="20" rows="7" name=blogcontent ng-model="blog.blogcontent" placeholder="Blog Content"></textarea></td></span>
 </tr>
-<tr bgcolor="pink">
+<tr bgcolor="red">
  <td colspan="2">
  <center>
- <input type="button" class="btn btn-success" ng-click="addBlog()" value="Add Blog"/>
- <a href="#/register">Sign up</a> 
+ <input type="button" class="btn btn-success" ng-click="addBlog(blog)" value="Add Blog"/>
+ 
  </center>
  </td>
  </tr>

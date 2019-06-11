@@ -9,20 +9,21 @@
 <th>Blog Name</th>
 <th>Created by</th>
 <th>Created Date</th>
+<th>Status</th>
 <th></th>
 </tr>
 </thread>
 <tbody>
-<tr nd-repeat="blog in blogData">
-<td>{{blog.blogName}}</td>
-<td>{{blog.userName}}</td>
-<td>{{blog.createDate}}</td>
-<td ng-hide="blog.status==='A'">
-<input type="button" vlue="Approve" class="btn btn-success" ng-click="approve(blog.blogId)"/>
+<tr ng-repeat="blog in blogData">
+<td>{{blog.blogname}}</td>
+<td>{{blog.user.username}}</td>
+<td>{{blog.createdate}}</td>
+<td >
+<input type="button" value="Approve" class="btn btn-success" ng-click="approve(blog.blogid)"/>
 </td>
-<td ng-hide="blog.status==='NA'">
-<input type="button" vlue="Reject" class="btn btn-success" ng-click="reject(blog.blogId)"/>
-</td>
+<td >
+<input type="button" value="Reject" class="btn btn-danger" ng-click="reject(blog.blogid)"/>
+</td></tr>
 </tbody>
 </table>
 </div>

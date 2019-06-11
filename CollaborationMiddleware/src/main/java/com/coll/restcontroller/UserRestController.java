@@ -21,14 +21,14 @@ public class UserRestController
 	UserDAO userDAO;
 
 	@PostMapping("/registerUser")
-	public ResponseEntity<String> registerUser(@RequestBody User user)
+	public ResponseEntity<?> registerUser(@RequestBody User user)
 	{
 		user.setRole("ROLE_USER");
 		user.setIsonline(false);
 		user.setStatus("A");
 		if(userDAO.registerUser(user))
 		{
-	return new ResponseEntity<String>("New User Registered",HttpStatus.OK);
+	return new ResponseEntity<User>(user,HttpStatus.OK);
 	
 }
 else
@@ -72,11 +72,11 @@ else
 	@PostMapping("/checkUser")
 	public ResponseEntity<User> checkUser(@RequestBody User user,HttpSession session)
 	{
-		User user1=userDAO.checkUser(user.getEmailid(),user.getPassword());
+		User user1=userDAO.checkUser(user.getUsername(),user.getPassword());
 		
 		if(user1!=null)
 		{
-			session.setAttribute("user",user1);
+			session.setAttribute("loggedinuser",user1);
 			return new ResponseEntity<User>(user1,HttpStatus.OK);
 		}
 		else

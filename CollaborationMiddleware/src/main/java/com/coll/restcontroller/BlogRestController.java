@@ -2,6 +2,8 @@ package com.coll.restcontroller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coll.DAO.BlogDAO;
 import com.coll.model.Blog;
+import com.coll.model.User;
 
 @RestController
 public class BlogRestController 
@@ -22,11 +25,21 @@ public class BlogRestController
 BlogDAO blogDAO;
 
 @GetMapping ("/showAllBlogs")
-public ResponseEntity<List<Blog>> showAllBlogs()
-{
-	List<Blog> blogList=blogDAO.listBlogs();
-	
+public ResponseEntity<List<Blog>> showAllBlogs(HttpSession session)
+{List<Blog> blogList=null;
+	User u=(User) session.getAttribute("loggedinuser");
+	System.out.println(u.getRole());
+	if(u.getRole().equals("ROLE_ADMIN"))
+	{
+	blogList=blogDAO.listBlogs("NA");
 	System.out.println("Blog List Size:"+blogList.size());
+	}
+	if(u.getRole().equals("ROLE_USER"))
+	{
+		blogList=blogDAO.listBlogs("A");
+		System.out.println("Blog List Size:"+blogList.size());
+	}
+	
 	
 	if(blogList.size()>0)
 	{
@@ -39,13 +52,14 @@ public ResponseEntity<List<Blog>> showAllBlogs()
 }
 
 @PostMapping("/addBlog")
-public ResponseEntity<String> addBlog(@RequestBody Blog blog)
+public ResponseEntity<String> addBlog(@RequestBody Blog blog,HttpSession session)
 {
+	User u=(User) session.getAttribute("loggedinuser");
 	blog.setCreatedate(new java.util.Date());
 	blog.setLikes(1);
 	blog.setDislike(0);
 	blog.setStatus("NA");
-	
+	blog.setUser(u);
 	
 	if(blogDAO.addBlog(blog))
 	{
@@ -75,13 +89,13 @@ public ResponseEntity<String> deleteBlog(@PathVariable("blogId")int blogId)
 }
 
 @GetMapping("/incrementLikes/{blogId}")
-public ResponseEntity<String> incrementLikes(@PathVariable("blogId")int blogId)
+public ResponseEntity<?> incrementLikes(@PathVariable("blogId")int blogId)
 {
 	Blog blog=blogDAO.getBlog(blogId);
 	
 	if(blogDAO.incrementLikes(blog))
 	{
-		return new ResponseEntity<String>("Blog likes incemented",HttpStatus.OK);
+		return new ResponseEntity<Blog>(blog,HttpStatus.OK);
 	}
 	else
 	{
@@ -90,13 +104,13 @@ public ResponseEntity<String> incrementLikes(@PathVariable("blogId")int blogId)
 	}
 
 @GetMapping("/incrementDisLikes/{blogId}")
-public ResponseEntity<String> incrementDisLikes(@PathVariable("blogId")int blogId)
+public ResponseEntity<?> incrementDisLikes(@PathVariable("blogId")int blogId)
 {
 	Blog blog=blogDAO.getBlog(blogId);
 	
 	if(blogDAO.incrementDislikes(blog))
 	{
-		return new ResponseEntity<String>("Blog Dislikes incemented",HttpStatus.OK);
+		return new ResponseEntity<Blog>(blog,HttpStatus.OK);
 	}
 	else
 	{

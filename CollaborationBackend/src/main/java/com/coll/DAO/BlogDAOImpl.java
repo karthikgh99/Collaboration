@@ -66,10 +66,10 @@ public class BlogDAOImpl implements BlogDAO{
 		}
 		}
 		@Override
-		public List<Blog> listBlogs() {
+		public List<Blog> listBlogs(String status) {
 			try
 			{
-				return sessionFactory.getCurrentSession().createQuery("from Blog").list();
+				return sessionFactory.getCurrentSession().createQuery("from Blog where status='"+status+"'").list();
 			}
 			catch (Exception e) {
 			return null;
@@ -93,7 +93,7 @@ public class BlogDAOImpl implements BlogDAO{
 		public boolean rejectBlog(Blog blog) {
 			try
 			{
-				blog.setStatus("NA");
+				blog.setStatus("R");
 				sessionFactory.getCurrentSession().update(blog);
 				return true;
 			}

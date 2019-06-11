@@ -1,0 +1,30 @@
+<div class="login-wrap">
+	<div class="login-html" ng-controller="jobController">
+		<div class="login-form" >
+			<h3>Fill Job Detail</h3>
+			<div class="form-group">
+				<div class="group">
+					<label for="designation">Designation</label>
+					<input type="text" class="form-control" name="designation" ng-model="job.designation">
+				</div>
+				<div class="group">
+					<label for="jobDesc">Job Description</label>
+					<input type="text" class="form-control" name="jobDesc" ng-model="job.jobDesc">
+					</div>
+					<div class="group">
+					<label for="lastDatetoApply">Last day to Apply</label>
+					<input type="date" class="form-control" name="lastDatetoApply" ng-model="job.lastDatetoApply">
+					</div>
+					<div class="group">
+					<label for="CTC">CTC</label>
+					<input type="text" class="form-control" name="CTC" ng-model="job.CTC">
+					</div>
+					<div class="group">
+					<label for="jobLocation">Job Location</label>
+					<input type="text" class="form-control" name="jobLocation" ng-model="job.jobLocation">
+					</div>
+				 <input type="button" class="btn btn-success" ng-click="publishJob(job)" value="Add Job"/>
+			</div>
+		</div>
+	</div>
+</div>
