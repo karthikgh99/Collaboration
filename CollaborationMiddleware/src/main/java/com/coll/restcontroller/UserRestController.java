@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -76,6 +77,8 @@ else
 		
 		if(user1!=null)
 		{
+			user1.setIsonline(true);
+			userDAO.updateUser(user1);
 			session.setAttribute("loggedinuser",user1);
 			return new ResponseEntity<User>(user1,HttpStatus.OK);
 		}
@@ -86,4 +89,15 @@ else
 		}
 	}
 	
-}
+	@PutMapping("/logout")
+	public ResponseEntity<User> logoutUser(@RequestBody User user,HttpSession session)
+	{
+			User u=(User) session.getAttribute("loggedinuser");
+			u.setIsonline(false);
+			userDAO.updateUser(u);
+			session.removeAttribute("loggedinuser");
+		session.invalidate();
+		return new ResponseEntity<User>(u,HttpStatus.OK);
+	}
+	}
+	

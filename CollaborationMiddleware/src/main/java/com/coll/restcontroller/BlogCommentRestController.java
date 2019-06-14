@@ -46,7 +46,7 @@ public ResponseEntity<?> addBlogComment(@RequestBody BlogComment blogComment ,Ht
 	User u=(User) session.getAttribute("loggedinuser");
 	blogComment.setUser(u);
 	blogComment.setCommentedon(new Date());
-	
+	System.out.println(blogComment.getBlog().getBlogid()+" "+blogComment.getBlog().getBlogname());
 	if (blogCommentDAO.addBlogComment(blogComment))
 	{
 		return new ResponseEntity<BlogComment>(blogComment,HttpStatus.OK);

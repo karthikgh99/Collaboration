@@ -1,22 +1,122 @@
-myApp.controller("ChatController",function($scope,$rootScope,chatService)
-{
-	console.log('Starting Chat Controller');
-	
-	$scope.messages=[];
-	$scope.message;
-	$scope.max=140;
-	
-	$scope.addMessage=function()
-	{
-		console.log('Adding Message Method');
-		chatService.send($rootScope.currentUser.username+":"+$scope.message);
-		$scope.message="";
-	}
-	
-	chatService.receive().then(null,null,function(message)
-	{
-		console.log('Receive Method');
-		$scope.message.push(message);
-	});
-	
-	});
+myApp.controller('ChatCtrl',
+		function($rootScope, $scope, $location, ChatService) {
+			alert('entering chat controller')
+			$scope.chats = [];
+			$scope.stompClient = ChatService.stompClient;
+			$scope.users = [];
+			$scope.friends=[];
+			$scope.$on('sockConnected', function(event, frame) {
+				alert('sockconnected')
+				$scope.userName = $rootScope.currentUser.username;
+				$scope.stompClient.subscribe("/topic/join" + $scope.userName,
+						function(message) {
+							console.log("Message = " + message);
+							user = JSON.parse(message.body);
+							console.log(user)
+
+							if (user != $scope.userName
+									&& $.inArray(user, $scope.users) == -1) {
+								$scope.addUser(user);
+								$scope.latestUser = user;
+								$scope.$apply();
+								$('#joinedChat').fadeIn(500).delay(2000)
+										.fadeOut(500);
+							}
+
+						});
+
+				$scope.stompClient.subscribe('/app/join/' + $scope.userName,
+						function(message) {
+
+							$scope.users = JSON.parse(message.body);
+
+							$scope.$apply();
+						});
+
+			});
+
+			$scope.sendMessage = function(chat) {
+				chat.from = $scope.currentUser.username;
+
+				$scope.stompClient.send('/app/chat', {}, JSON.stringify(chat));
+				console.log(chat);
+				$rootScope.$broadcast('sendingChat', chat);
+				$scope.chat.message = "";
+
+			};
+
+			$scope.capitalize = function(str) {
+				console.log(str);
+				return str.charAt(0).toUpperCase() + str.slice(1);
+			};
+
+			$scope.addUser = function(user) {
+				$scope.users.push(user);
+				$scope.$apply();
+			};
+			$scope.$on('sockConnected', function(event, frame) {
+				// $scope.userName=$rootScope.loggedInUser.email;
+
+				$scope.userName = $rootScope.currentUser.username;
+
+				$scope.stompClient.subscribe("/queue/chats/" + $scope.userName,
+						function(message) {
+
+							$scope.processIncomingMessage(message, false);
+						});
+
+				$scope.stompClient.subscribe("/queue/chats", function(message) {
+
+					$scope.processIncomingMessage(message, true);
+				});
+
+			});
+
+			$scope.$on('sendingChat', function(event, sentChat) {
+				chat = angular.copy(sentChat);
+				chat.from = 'Me';
+				chat.direction = 'outgoing';
+				$scope.addChat(chat);
+			});
+
+			$scope.processIncomingMessage = function(message, isBroadcast) {
+				message = JSON.parse(message.body);
+				message.direction = 'incoming';
+				message.broadcast = isBroadcast
+				if (message.from != $scope.currentUser.username) {
+					$scope.addChat(message);
+					$scope.$apply(); // since inside subscribe closure
+				}
+			};
+
+			ChatService.users.then(function(response) {
+				$scope.users = response.data;
+				console.log("friend status " + JSON.stringify($scope.users));
+				for(var i=0;i<$scope.users.length;i++)
+					{
+				if($scope.users[i].friendusername==$rootScope.currentUser.username)
+					{
+					console.log($scope.users[i].username);
+					$scope.friends.push($scope.users[i].username);
+					}
+					
+				if($scope.users[i].username==$rootScope.currentUser.username)
+					{
+					console.log($scope.users[i].friendusername);
+					$scope.friends.push($scope.users[i].friendusername);
+					}
+					console.log($scope.friends);
+					}
+				$scope.users=$scope.friends;
+			}, function(response) {
+				$rootScope.error = response.data
+				if (response.status == 401)
+					$location.path('/login')
+
+			})
+
+			$scope.addChat = function(chat) {
+				$scope.chats.push(chat);
+			};
+
+		});

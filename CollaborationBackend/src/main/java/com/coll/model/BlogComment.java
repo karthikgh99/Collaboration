@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class BlogComment {
 
@@ -18,6 +20,7 @@ public class BlogComment {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int blogcommentid;
 	private String commentdata;
+	
 	private Date commentedon;
 	
 	@ManyToOne

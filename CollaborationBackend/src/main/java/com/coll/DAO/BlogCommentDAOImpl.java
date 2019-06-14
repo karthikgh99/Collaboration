@@ -20,6 +20,7 @@ import com.coll.model.BlogComment;
 		public boolean addBlogComment(BlogComment blogComment) {
 			try
 			{
+				System.out.println(blogComment.getBlog().getBlogname());
 				sessionFactory.getCurrentSession().save(blogComment);
 				return true;
 			}

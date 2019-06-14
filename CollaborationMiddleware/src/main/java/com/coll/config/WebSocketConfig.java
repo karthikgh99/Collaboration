@@ -2,29 +2,35 @@ package com.coll.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
-	@EnableWebSocketMessageBroker
-	@ComponentScan(basePackages="com.coll")
-	public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer
-	{
-		@Override
-		public void configureMessageBroker(MessageBrokerRegistry config)
-		{
-			config.enableSimpleBroker("/topic");
-			config.setApplicationDestinationPrefixes("/app");
-		}
+@EnableWebSocketMessageBroker // enable broker based stomp messaging
+@ComponentScan(basePackages = "com.niit")
+public class WebSocketconfig implements WebSocketMessageBrokerConfigurer {
 
-		@Override
-		public void registerStompEndpoints(StompEndpointRegistry registry) 
-		{
-			registry.addEndpoint("/cha").withSockJS();
-		}
+	public void registerStompEndpoints(StompEndpointRegistry registry) {
+		System.out.println("REGISTER STOMP ENDPOINTS...");
+		registry.addEndpoint("/chatmodule").withSockJS();
+	}
+
+	public void configureMessageBroker(MessageBrokerRegistry configurer) {
+		System.out.println("CONFIGURE MESSAGE BROKER REGISTRY");
+		configurer.enableSimpleBroker("/queue/", "/topic/");
+		configurer.setApplicationDestinationPrefixes("/app");
+	}
+
+	public void configureClientInboundChannel(ChannelRegistration registration) {
+		// TODO Auto-generated method stub
 
 	}
 
+	public void configureClientOutboundChannel(ChannelRegistration registration) {
+		// TODO Auto-generated method stub
 
+	}
+}

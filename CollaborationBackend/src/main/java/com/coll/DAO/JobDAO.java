@@ -2,8 +2,11 @@ package com.coll.DAO;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.coll.model.Job;
 
+@Repository("jobDAO")
 public interface JobDAO {
 	
 	boolean addJob(Job job);
@@ -11,9 +14,6 @@ public interface JobDAO {
 	boolean updateJob(Job job);
 
 	boolean deleteJob(Job job);
-	
-	boolean showJob(Job job);
-
 	
 	List<Job> selectAllJob();
 

@@ -2,8 +2,7 @@ package com.coll.DAO;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,17 +24,20 @@ SessionFactory sessionFactory;
 public List<Friend> showFriendList(String loginName)
 {
 	Session session=sessionFactory.openSession();
-	Query query=session.createQuery("from Friend where username=:login and status='A'");
+	Query query=session.createQuery("from Friend where username=:login or friendusername=:login and status='A'");
 	query.setParameter("login", loginName);
-	return null;
+	
+	return query.list();
+	
 }
 
 @Override
 public List<Friend> showPendingFriendRequest(String loginName)
 {Session session=sessionFactory.openSession();
-Query query=session.createQuery("from Friend where username=:login and status='P'");
+Query query=session.createQuery("from Friend where friendusername=:login and status='P'");
 query.setParameter("login", loginName);
-return null;
+return query.list();
+
 }
 
 
@@ -60,7 +62,7 @@ public List<User> showSuggestedFriend(String loginName) {
 	SQLQuery sql=session.createSQLQuery("select * from userdata where username in("
 			+ "select username from userdata where username!=:loginusername minus"
 			+ "(select friendusername from Friend where username=:login"
-			+ "union select username from Friend where friendusername=:login))");
+			+ " union select username from Friend where friendusername=:login))");
 	sql.setParameter("loginusername", loginName);
 	sql.setParameter("login",loginName);
 	sql.setParameter("login",loginName);
@@ -102,6 +104,12 @@ public boolean deleteFriendRequest(int friendId)
 	{
 		return false;
 	}
+}
+
+@Override
+public Friend getFriend(int friendId) {
+	Friend friend=sessionFactory.getCurrentSession().get(Friend.class,friendId);
+	return friend;
 }
 
 

@@ -2,6 +2,8 @@ package com.coll.restcontroller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,16 +37,16 @@ public class FriendRestController
 		}
 	}
 	@GetMapping(value="/pendingFriendList/{username}")
-	public ResponseEntity<List<Friend>> pendingFriendList(@PathVariable("username") String username)
+	public ResponseEntity<?> pendingFriendList(@PathVariable("username") String username)
 	{
 		List<Friend> pendingFriendList =friendDAO.showPendingFriendRequest(username);
-		if(pendingFriendList.size()>0)
+		if(pendingFriendList!=null)
 		{
 			return new ResponseEntity<List<Friend>>(pendingFriendList,HttpStatus.OK);
 		}
 		else
 		{
-			return new ResponseEntity<List<Friend>>(pendingFriendList,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	@GetMapping(value="/suggestedFriendList/{username}")
@@ -61,12 +63,12 @@ public class FriendRestController
 		}
 	}
 	@GetMapping(value="/acceptFriendRequest/{friendId}")
-	public ResponseEntity<String> acceptFriendRequest(@PathVariable("friendId") int friendId)
+	public ResponseEntity<?> acceptFriendRequest(@PathVariable("friendId") int friendId)
 	{
-		
+		Friend f=friendDAO.getFriend(friendId);
 		if(friendDAO.acceptFriendRequest(friendId))
 		{
-			return new ResponseEntity<String>("Friend Request Accepted",HttpStatus.OK);
+			return new ResponseEntity<Friend>(f,HttpStatus.OK);
 		}
 		else
 		{
@@ -87,12 +89,13 @@ public class FriendRestController
 		}
 	}
 	@PostMapping(value="/sendFriendRequest")
-	public ResponseEntity<String> sendFriendRequest(@RequestBody Friend friend)
+	public ResponseEntity<?> sendFriendRequest(@RequestBody Friend friend,HttpSession session)
 	{
-		
+		User u=(User) session.getAttribute("loggedinuser");
+		friend.setUsername(u.getUsername());
 		if(friendDAO.sendFriendRequest(friend))
 		{
-			return new ResponseEntity<String>("Friend Request Sent",HttpStatus.OK);
+			return new ResponseEntity<Friend>(friend,HttpStatus.OK);
 		}
 		else
 		{

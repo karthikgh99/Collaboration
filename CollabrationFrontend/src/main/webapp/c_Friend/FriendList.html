@@ -4,13 +4,59 @@
 
 <div class="row text-center text-lg-left">
 <div ng-repeat="friend in friendList" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+
 <div ng-show="friend.username==currentUser.username">
-<img src="" class="img-circle" width="100" height="100"/>
+<!-- <img src="" class="img-circle" width="100" height="100"/> -->
 <p>
 <strong>{{friend.friendusername}}</strong>
-<input type="button" value="Unfriend" ng-click="unfriend(friend.friendid")>
+<input type="button" value="Unfriend" ng-click="unfriend(friend.friendId)" class="btn btn-danger" />
+</p>
+</div>
+<div ng-show="friend.friendusername==currentUser.username">
+<!-- <img src="" class="img-circle" width="100" height="100"/> -->
+<p>
+<strong>{{friend.username}}</strong>
+<input type="button" value="Unfriend" ng-click="unfriend(friend.friendId)" class="btn btn-danger" />
+</div>
+</div>
 </div>
 </div>
 
+<div style="background-color:orange"><h3>Pending Friend List</h3></div>
+
+<div class="row text-center text-lg-left">
+<div ng-repeat="friend in pendingFriendList" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+
+<div ng-show="friend.username==currentUser.username">
+<!-- <img src="" class="img-circle" width="100" height="100"/> -->
+<p>
+<strong>{{friend.friendusername}}</strong>
+<input type="button" value="Accept" ng-click="accept(friend.friendid)" class="btn btn-success"/>>
+<input type="button" value="Accept" ng-click="reject(friend.friendid)" class="btn btn-danger"/>>
+</p>
+</div>
+<div ng-show="friend.friendusername==currentUser.username">
+<!-- <img src="" class="img-circle" width="100" height="100"/> -->
+<p>
+<strong>{{friend.username}}</strong>
+<input type="button" value="Accept" ng-click="accept(friend.friendId)" class="btn btn-success"/>
+<input type="button" value="Reject" ng-click="reject(friend.friendId)" class="btn btn-danger"/>
+</p>
+</div>
+</div>
+</div>
+
+<div style="background-color:orange"><h3>Suggested Friend List</h3></div>
+<div class="row text-center text-lg-left">
+<div ng-repeat="friend in suggestedFriendList" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+
+<div >
+<!-- <img src="" class="img-circle" width="100" height="100"/> -->
+<p>
+<strong>{{friend[2]}}</strong>
+<input type="button" value="Send Request" ng-click="friendRequest(friend[6])" class="btn btn-danger"/>
+
+</p>
+</div>
 </div>
 </div>

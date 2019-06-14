@@ -33,15 +33,19 @@ myApp.config(function($routeProvider,$locationProvider)
     controller:"userController"
 })
    .when("/friend", {templateUrl:"c_Friend/FriendList.html",
-	  controller:"FriendController"
+	  controller:"friendController"
   })
     
 .when("/chat",{templateUrl : "c_chat/Chat.html",
-controller:"chatController"
+controller:"ChatCtrl"
 })
-.when("/addjob",{templateUrl : "c_job/Job.html",
-controller:"JobController"
+.when("/addJob",{templateUrl : "c_job/AddJob.html",
+controller:"jobController"
 })
+.when("/showJobs",{templateUrl : "c_job/ShowJob.html",
+controller:"jobController"
+})
+
 });
 
 myApp.run(function($rootScope,$cookieStore){

@@ -18,9 +18,8 @@ public class Job
 	int jobId;
 	String jobDesc;
 	String designation;
-	String desc;
 	Date lastDatetoApply;
-	int CTC;
+	String CTC;
 	String jobLocation;
 	String companyName;
 	String skill;
@@ -42,22 +41,19 @@ public class Job
 	public void setDesignation(String designation) {
 		this.designation = designation;
 	}
-	public String getDesc() {
-		return desc;
-	}
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
+	
 	public Date getLastDatetoApply() {
 		return lastDatetoApply;
 	}
 	public void setLastDatetoApply(Date lastDatetoApply) {
 		this.lastDatetoApply = lastDatetoApply;
 	}
-	public int getCTC() {
+	
+	
+	public String getCTC() {
 		return CTC;
 	}
-	public void setCTC(int cTC) {
+	public void setCTC(String cTC) {
 		CTC = cTC;
 	}
 	public String getJobLocation() {

@@ -1,8 +1,12 @@
 <div class="login-wrap">
-	<div class="login-html" ng-controller="jobController">
+	<div class="login-html" >
 		<div class="login-form" >
 			<h3>Fill Job Detail</h3>
 			<div class="form-group">
+			<div class="group">
+					<label for="jobLocation">Company Name</label>
+					<input type="text" class="form-control" name="companyName" ng-model="job.companyName">
+					</div>
 				<div class="group">
 					<label for="designation">Designation</label>
 					<input type="text" class="form-control" name="designation" ng-model="job.designation">
@@ -18,6 +22,10 @@
 					<div class="group">
 					<label for="CTC">CTC</label>
 					<input type="text" class="form-control" name="CTC" ng-model="job.CTC">
+					</div>
+					<div class="group">
+					<label for="skill">Skill</label>
+					<input type="text" class="form-control" name="skill" ng-model="job.skill">
 					</div>
 					<div class="group">
 					<label for="jobLocation">Job Location</label>

@@ -56,7 +56,7 @@ public class DbConfig {
 	    sessionFactoryBuilder.addAnnotatedClass(Forum.class);
 	    sessionFactoryBuilder.addAnnotatedClass(ForumComment.class);
 	    sessionFactoryBuilder.addAnnotatedClass(Friend.class);
-	   // sessionFactoryBuilder.addAnnotatedClass(Job.class);
+	    sessionFactoryBuilder.addAnnotatedClass(Job.class);
 	    sessionFactoryBuilder.addAnnotatedClass(User.class);
 	    sessionFactoryBuilder.addAnnotatedClass(ProfilePicture.class);
 	    

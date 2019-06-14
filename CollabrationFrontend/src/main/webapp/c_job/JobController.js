@@ -1,25 +1,27 @@
 myApp.controller("jobController",function($scope,$location,$http,$rootScope,$cookieStore)
 {
-$scope.job={"jobId":0,"designation":"","jobDesc":"","lastDatetoApply":"","CTC":0,"jobLocation":""};
+$scope.job={"jobId":"0","designation":"","jobDesc":"","lastDatetoApply":"","CTC":"","jobLocation":"","companyName":"","skill":""};
 $scope.jobs;
 
-$scope.publishJob=function()
+$scope.publishJob=function(job)
 {
-	console.log($scope.job);
-	$http.post("http://localhost:8081/Collaboration/addJob",$scope.job)
+	$scope.job=job;
+	console.log(job.CTC);
+	$http.post("http://localhost:8081/CollaborationMiddleware/addJob",job)
 	.then(function(response){
+		console.log(response.data)
 		alert("Job Added");
 });
 }
 	
 	function showJobs()
 	{
-		$http.post("http://localhost:8081/CollaborationMiddleware/showJob",$scope.job)
+		$http.get("http://localhost:8081/CollaborationMiddleware/showJobs")
 		.then(function(response)
 				{
 			$scope.jobs=response.data;
 			console.log($scope.jobs);
-				alert("Job Added")
+				
 	});
 }
 	$scope.detailJob=function(jobId)
